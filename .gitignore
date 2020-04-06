@@ -2,3 +2,5 @@ env/
 .vscode/
 venv/
 __pycache__
+index.html
+wine.xlsx
