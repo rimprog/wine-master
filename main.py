@@ -1,4 +1,5 @@
 import datetime
+import argparse
 from collections import defaultdict
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -15,6 +16,12 @@ def get_company_age():
 
 
 def main():
+    parser = argparse.ArgumentParser(
+        description='This script parse information about wines and run website local by this link http://127.0.0.1:8000/.'
+    )
+    parser.add_argument('--wine_path', help='Input path to wine.xlsx file. Default: "wine.xlsx"')
+    args = parser.parse_args()
+
     env = Environment(
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
@@ -23,8 +30,10 @@ def main():
     template = env.get_template('template.html')
 
     company_age = get_company_age()
+
+    path_to_wines = args.wine_path if args.wine_path else 'wine.xlsx'
     wines_df = pandas.read_excel(
-        'wine.xlsx',
+        path_to_wines,
         na_values=None,
         keep_default_na=False
     )
