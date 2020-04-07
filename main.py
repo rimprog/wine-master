@@ -38,8 +38,13 @@ def main():
         keep_default_na=False
     )
     wines = wines_df.to_dict(orient='records')
+    wines_categories = set(wines_df['Категория'].to_list())
 
-    rendered_page = template.render(company_age=company_age, wines=wines)
+    rendered_page = template.render(
+        company_age=company_age,
+        wines=wines,
+        wines_categories = wines_categories
+    )
 
     with open('index.html', 'w', encoding='utf8') as file:
         file.write(rendered_page)
