@@ -19,7 +19,11 @@ def main():
     parser = argparse.ArgumentParser(
         description='This script parse information about wines and run website local by this link http://127.0.0.1:8000/.'
     )
-    parser.add_argument('--wine_path', help='Input path to wine.xlsx file. Default: "wine.xlsx"')
+    parser.add_argument(
+        '--wine_path',
+        default='wine.xlsx',
+        help='Input path to wine.xlsx file. Default: "wine.xlsx"'
+    )
     args = parser.parse_args()
 
     env = Environment(
@@ -31,9 +35,8 @@ def main():
 
     company_age = get_company_age()
 
-    path_to_wines = args.wine_path if args.wine_path else 'wine.xlsx'
     wines_df = pandas.read_excel(
-        path_to_wines,
+        args.wine_path,
         na_values=None,
         keep_default_na=False
     )
